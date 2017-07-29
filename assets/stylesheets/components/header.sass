@@ -1,0 +1,41 @@
+.top-interaction
+  background: $red
+  height: 80px 
+
+.menu-items 
+  ul 
+    display: table
+    height: 100%
+    width: 100%
+    li
+      list-style: none
+      display: table-cell
+      padding: 10px
+      vertical-align: middle
+      height: 100% 
+
+      a 
+        color: #fff
+      &:hover
+        a
+          text-decoration: none
+          color: #f00
+        .submenu 
+          display: block
+      
+      .submenu
+        background: #f0f
+        position: absolute
+        left: 0
+        width: 100%
+        margin-top: 15px
+        border-radius: 0
+        display: none
+        text-align: center
+        li
+          border-radius: 0 !important
+          display: block
+
+
+
+

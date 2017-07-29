@@ -1,0 +1,10 @@
+{
+  "name": "cancelou_front",
+  "version": "1.0.0",
+  "description": "Gulp de minificação",
+  "author": "Victor Palhares <victorpalhares.com.br>",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-sass": "*"
+  }
+}
