@@ -4607,13 +4607,18 @@ button.close {
 .content {
   max-width: 100%;
   width: 1158px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  position: relative; }
 
 body {
   font-family: 'Raleway', sans-serif; }
 
+header {
+  position: absolute;
+  width: 100%;
+  z-index: 999; }
+
 .top-interaction {
-  background: #E01E25;
   height: 80px; }
 
 .area-logo, .menu-items, .menu-user {
@@ -4688,3 +4693,18 @@ body {
         text-decoration: none;
         background: #FFFFFF;
         color: #E01E25; }
+
+.home-section {
+  width: 100%; }
+
+.banners .carousel-indicators {
+  top: 50%;
+  left: 40%; }
+  .banners .carousel-indicators li {
+    display: block;
+    margin-bottom: 5px; }
+
+.banners #mouse {
+  position: absolute;
+  top: 70%;
+  left: 50%; }
