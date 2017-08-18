@@ -1,3 +1,19 @@
+@mixin respond-to($media) {
+  @if $media == handhelds {
+    @media only screen and (max-width: 320px) { @content; }
+  }
+  @else if $media == medium-screens {
+    @media only screen and (min-width: 321px) and (max-width: 1024px) { @content; }
+  }
+  @else if $media == wide-screens {
+    @media only screen and (min-width: 1024px) { @content; }
+  }
+}
+
+//@include respond-to(handhelds) { width: 100% ;}
+//@include respond-to(medium-screens) { width: 125px; }
+//@include respond-to(wide-screens) { float: none; }
+
 //Default
 body,html{
   height: 100%;
@@ -12,6 +28,15 @@ ul{
 img.alignCenter{
   display: block;
   margin: 0 auto;
+}
+
+.hide-mobile{
+  @include respond-to(medium-screens) { display: none;}
+}
+
+.hide-desktop{
+  display: none;
+  @include respond-to(medium-screens) { display: block;}
 }
 
 .pagination{
@@ -45,6 +70,7 @@ img.alignCenter{
         font-size: 15px;
         font-weight: 300;
         color: #34495e;
+        @include respond-to(medium-screens) {font-size: 13px;}
         &.upload{
           color: #E91D29;
         }
@@ -138,13 +164,32 @@ header{
   z-index: 100;
   top:0;
   left: 0;
+  @include respond-to(medium-screens) {
+    padding-top: 17px;
+    height: 62px;
+  }
   &.header-interna{
     background-color: #E91D29;
     position: relative;
   }
   .logo-header{
     float: left;
+    img{
+      @include respond-to(medium-screens) {
+        width: 169px;
+      }
+    }
   }
+
+  .show-menu-mobile{
+    float: right;
+    font-size: 19px;
+    color: #fff;
+    margin-top: 5px;
+    line-height: 22px;
+  }
+
+
 
   nav{
     margin-left: 60px;
@@ -184,6 +229,78 @@ header{
   }
 
 }
+.menu-mobile{
+  position: fixed;
+  width: 230px;
+  height: 100%;
+  background-color: #fff;
+  right: -100%;
+  z-index: 10000;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.5);
+  padding: 10px 15px;
+  -webkit-transition-duration: .5s; /* Safari */
+  transition-duration: .5s;
+  top:0;
+  &.active{
+    right: 0;
+  }
+  .close-menu{
+    color: #e91d29;
+    float: right;
+    margin-bottom: 15px;
+  }
+  .btn-default {
+    width: 100%;
+    height: 38px;
+    border-radius: 4px;
+    border: solid 1px #e91d29;
+    display: inline-block;
+    background-color: #fff;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 38px;
+    text-shadow: 0 1px 30px rgba(8, 35, 63, 0.5);
+    font-size: 12px;
+    color: #e91d29;
+    margin-bottom: 15px;
+  }
+  .btn-default.btn-outline {
+    color: #fff;
+    border: none;
+    background-color: #e91d29;
+
+  }
+  nav{
+    ul{
+      li{
+        margin-bottom: 10px;
+        a{
+          height: 26px;
+          line-height: 26px;
+          color: #8d8d8d;
+          font-size: 12px;
+          text-transform: uppercase;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+.shadow-menu{
+  background-color: rgba(0,0,0,0.3);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top:0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  &.active{
+    display: block;
+  }
+}
+
 //End Header
 
 //Breadcrumb
@@ -191,6 +308,7 @@ header{
   background-color: transparent;
   z-index: 100;
   position: relative;
+  margin-bottom: 0px;
   &.breadcrumb-white{
     position: relative;
     z-index: 100;
@@ -226,12 +344,15 @@ header{
 }
 //End BreadCrumb
 
+
 //Footer
 footer{
   padding-top: 123px;
   padding-bottom: 123px;
+  @include respond-to(medium-screens) { padding: 60px 0px;}
   .wrap-newsletter{
     padding-top: 31px;
+    @include respond-to(medium-screens) { display: none;}
     .title-newsletter{
       font-size: 12px;
     	font-weight: bold;
@@ -284,6 +405,7 @@ footer{
 
   .wrap-menu-footer{
     padding-top: 58px;
+    @include respond-to(medium-screens) { overflow: hidden;padding-top: 20px;}
     ul{
       padding: 0px;
       li{
@@ -303,6 +425,7 @@ footer{
   .wrap-links-footer{
     .social-media{
       margin-bottom: 20px;
+      @include respond-to(medium-screens) { text-align: right;}
       a{
         margin-right: 10px;
       }
@@ -343,7 +466,7 @@ footer{
 
 //Banners
 .container-banner-home,.banner-destaque-blog{
-  height: 100%;
+  height: calc(100%);
   width: 100%;
   position: relative;
   z-index: 10;
@@ -355,6 +478,19 @@ footer{
     margin-left: 0px;
     width: 14px;
     bottom: 50%;
+    @include respond-to(medium-screens) {
+      bottom: 66px;
+      width: 100%;
+      left: 0px;
+    }
+    li{
+      @include respond-to(medium-screens) {
+        margin-right: 5px;
+      }
+      &:last-child{
+        margin-right: 0px;
+      }
+    }
   }
 
   .carousel-inner{
@@ -375,6 +511,7 @@ footer{
         left:50%;
         bottom: 104px;
         margin-left: 13px;
+        @include respond-to(medium-screens) { display: none;}
       }
       .wrap-banner-left{
         float: left;
@@ -387,7 +524,35 @@ footer{
         align-items: left;
         justify-content: center;
         flex-direction: column;
+        @include respond-to(medium-screens) {
+          padding: 0px;
+          width: 100%;
+          text-align: center;
+          position: relative;
+          height: 100%;
+          padding-top: 100px;
+        }
 
+        .wrap-action-banner{
+          @include respond-to(medium-screens) {
+            width: 100%;
+          }
+          a{
+            @include respond-to(medium-screens) {
+              display: block;
+              margin: 0 auto;
+              margin-bottom: 10px;
+              text-align: center;
+            }
+            img{
+              @include respond-to(medium-screens) {
+                display: block;
+                margin: 0 auto;
+              }
+            }
+          }
+
+        }
 
         .title-banner{
           width: 498px;
@@ -399,6 +564,9 @@ footer{
         	letter-spacing: normal;
         	color: #ffffff;
           margin-bottom: 24px;
+          @include respond-to(medium-screens) {
+            width: 100%;
+          }
         }
 
         p{
@@ -408,6 +576,9 @@ footer{
         	line-height: 1.44;
         	color: #ffffff;
           margin-bottom: 26px;
+          @include respond-to(medium-screens) {
+            width: 100%;
+          }
         }
 
       }
@@ -418,6 +589,9 @@ footer{
         position: absolute;
         bottom:0;
         right: 0;
+        @include respond-to(medium-screens) {
+          display: none;
+        }
         img{
           display: block;
           max-width:40%;
@@ -427,7 +601,9 @@ footer{
     }
   }
 }
-
+.banner-destaque-blog{
+  height: calc(100% - 122px);
+}
 .banner-destaque-blog{
   margin-bottom: 80px;
   .item{
@@ -446,6 +622,9 @@ footer{
     bottom: 0px;
     left: 0px;
     height: 162px;
+    @include respond-to(medium-screens) {
+      height: 35px;
+    }
     .container{
       position: relative;
     }
@@ -466,10 +645,22 @@ footer{
         border-right: 1px solid rgba(255,255,255,0.43);
         border-radius: 0px;
         text-align: left;
+        @include respond-to(medium-screens) {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          text-indent: -99999em;
+          background-color: #e91d29;
+          padding: 0px;
+          border: none;
+          opacity: 0.5;
+
+        }
         &:last-child{
           border-right: 0px;
         }
         &.active{
+          opacity: 1;
           .number{
             color: #e91d29;
           }
@@ -490,6 +681,9 @@ footer{
           font-size: 14px;
         	line-height: 1.43;
         	color: rgba(255,255,255,0.7);
+          @include respond-to(medium-screens) {
+            display: none;
+          }
         }
       }
     }
@@ -503,17 +697,30 @@ footer{
     margin-top: 51px;
     padding: 48px 48px 24px 48px;
     background-color: #2E3359;
+    @include respond-to(medium-screens) {
+      width: 100%;
+      margin-top: 120px;
+    }
     .title-banner{
       font-size: 38px;
 	    color: #ffffff;
       line-height: 38px;
       margin-bottom: 30px;
       display: block;
+      @include respond-to(medium-screens) {
+        font-size: 20px;
+        line-height: 22px;
+        margin-bottom: 15px;
+      }
     }
     p{
       font-size: 18px;
     	line-height: 1.44;
     	color: #ffffff;
+      @include respond-to(medium-screens) {
+        font-size: 14px;
+        line-height: 20px;
+      }
     }
     .link-single-page{
       padding-bottom: 24px;
@@ -522,6 +729,9 @@ footer{
       text-transform: uppercase;
       text-shadow: 0 1px 30px rgba(8, 35, 63, 0.5);
       font-size: 12px;
+      @include respond-to(medium-screens) {
+        margin-top: 15px;
+      }
     }
   }
 }
@@ -538,6 +748,9 @@ footer{
   background-position: 0px 85px;
   position: relative;
   z-index: 100;
+  @include respond-to(medium-screens) {
+    background-image: none;
+  }
   &.form-negative{
     .wrap-form{margin-top: -72px;}
   }
@@ -546,11 +759,18 @@ footer{
     .wrap-form{
       padding-bottom: 204px;
       padding-top: 101px;
+
       form{
         width: 372px;
+        @include respond-to(medium-screens) {
+          width: 100%;
+        }
         input[type="submit"]{
           width: 100%!important;
           background-position: 315px 16px!important;
+          @include respond-to(medium-screens) {
+            background-position: 305px 16px!important;
+          }
         }
       }
     }
@@ -562,9 +782,15 @@ footer{
 
   &.form-navegation{
     margin-top: 61px;
+    @include respond-to(medium-screens) {
+      margin-top: 15px;
+    }
     .wrap-form{
       padding-top: 26px!important;
       padding-bottom: 71px!important;
+      @include respond-to(medium-screens) {
+        padding-bottom: 35px!important;
+      }
     }
   }
 
@@ -576,6 +802,11 @@ footer{
     background-color: #F3F1F1;
     margin: 0 auto;
     padding: 75px 0px 75px;
+    @include respond-to(medium-screens) {
+      width: 100%;
+      background-image: none;
+      padding: 54px 10px 24px;
+    }
     .wrap-navegation-form{
       text-align: center;
       width: 100%;
@@ -627,6 +858,9 @@ footer{
       width: 770px;
       margin: 0 auto;
       margin-top: 90px;
+      @include respond-to(medium-screens) {
+        width: 100%;
+      }
       li{
         margin-bottom: 15px;
       }
@@ -635,6 +869,9 @@ footer{
       text-align: center;
       font-size: 34px;
       margin-bottom: 19px;
+      @include respond-to(medium-screens) {
+        font-size: 28px;
+      }
     }
     img{
       display: block;
@@ -646,6 +883,10 @@ footer{
       margin: 0 auto;
       margin-top: 23px;
       font-size: 18px;
+      @include respond-to(medium-screens) {
+        width: 100%;
+        font-size: 16px;
+      }
       a{
         font-weight: 500;
 	      color: #e91d29;
@@ -656,8 +897,14 @@ footer{
       width: 570px;
       margin: 0 auto;
       margin-top: 25px;
+      @include respond-to(medium-screens) {
+        width: 100%;
+      }
       &.form-minha-conta{
         width: 770px;
+        @include respond-to(medium-screens) {
+          width: 100%;
+        }
       }
       .wrap-field{
         margin-bottom: 19px;
@@ -665,6 +912,7 @@ footer{
           display: block;
           font-size: 15px;
         	color: #2e3359;
+
         }
         textarea{
           width: 100%;
@@ -699,9 +947,15 @@ footer{
       }
       .field-50{
         width: 48%;
+        @include respond-to(medium-screens) {
+          width: 100%;
+        }
       }
       .offset-50{
         margin-right: 50%;
+        @include respond-to(medium-screens) {
+          margin-right: 0px;
+        }
       }
       .field-100{
         clear: both;
@@ -714,10 +968,19 @@ footer{
         float: right;
       }
 
+      .label-text{
+        @include respond-to(medium-screens) {
+          float: left;
+          width: 80%;
+        }
+      }
+
       .input-radio{
         position: relative;
         float: left;
         margin-right: 10px;
+
+
 
         cursor: pointer;
         input{
@@ -805,6 +1068,9 @@ footer{
     height: 85px;
     margin: 0 auto;
     margin-bottom: 16px;
+    @include respond-to(medium-screens) {
+      display: none;
+    }
   }
 
 }
@@ -818,6 +1084,7 @@ footer{
   	font-weight: 800;
   	text-align: center;
   	color: #2e3359;
+    @include respond-to(medium-screens) { font-size: 28px;}
   }
   img.divisor{
     display: block;
@@ -833,6 +1100,7 @@ footer{
   	line-height: 1.54;
   	text-align: center;
   	color: #3d3d3d;
+    @include respond-to(medium-screens) { font-size: 18px;width: 100%;}
   }
 
   .wrap-depoimentos{
@@ -910,9 +1178,11 @@ footer{
   .container-cta{
     width: 963px;
     margin: 0 auto;
+    @include respond-to(medium-screens) { width: 100%;}
     .img-phones{
       float: left;
       margin-top: -41px;
+      @include respond-to(medium-screens) { display: none;}
     }
     .wrap-text-cta{
       margin-left: 83px;
@@ -923,6 +1193,7 @@ footer{
       flex-direction: column;
       height: 393px;
       width: 500px;
+      @include respond-to(medium-screens) { width: 98%;margin-left: 10px;}
       h4{
         display: inline-block;
         width: 498.9px;
@@ -930,6 +1201,7 @@ footer{
       	font-size: 38px;
       	font-weight: 300;
       	color: #ffffff;
+        @include respond-to(medium-screens) {font-size: 28px;width: 100%;}
       }
       p{
         display: inline-block;
@@ -937,12 +1209,14 @@ footer{
       	font-weight: 200;
         margin-bottom: 26px;
       	color: #ffffff;
+        @include respond-to(medium-screens) { font-size: 15px;width: 98%;}
       }
       .btns-cta{
         width: 100%;
         text-align: left;
         a{
           margin-right: 18px;
+          @include respond-to(medium-screens) {margin-bottom: 10px;display: block;}
         }
       }
     }
@@ -957,6 +1231,8 @@ footer{
   background-position: center -160px;
   padding-bottom: 30px;
   background-size: cover;
+  @include respond-to(medium-screens) { padding-top: 45px;}
+
 
   &.section-cases{
     background-image: none;
@@ -984,7 +1260,7 @@ footer{
       li{
         display: flex;
         margin-bottom: 30px;
-
+        @include respond-to(medium-screens) {margin-bottom: 15px;}
       }
     }
   }
@@ -1012,6 +1288,7 @@ footer{
   }
   ul{
     li{
+      @include respond-to(medium-screens) {margin-bottom: 15px;}
       .wrap-single-news{
         background-color: #fff;
       }
@@ -1032,6 +1309,7 @@ footer{
       	text-shadow: 0 1px 30px rgba(8, 35, 63, 0.5);
         border-radius: 4px;
 	      background-color: #e91d29;
+        @include respond-to(medium-screens) {margin-left: 12px;}
       }
       .title{
         margin-left: 24px;
@@ -1041,6 +1319,7 @@ footer{
         font-size: 18px;
       	font-weight: bold;
       	color: #2e3359;
+        @include respond-to(medium-screens) {margin-left: 12px;}
       }
       p{
         margin-bottom: 22px;
@@ -1049,6 +1328,7 @@ footer{
       	font-weight: 300;
       	line-height: 1.86;
       	color: #000000;
+        @include respond-to(medium-screens) {margin-left: 12px;}
       }
       .link-single-page{
         margin-left: 24px;
@@ -1058,8 +1338,23 @@ footer{
         text-transform: uppercase;
 	      text-shadow: 0 1px 30px rgba(8, 35, 63, 0.5);
         font-size: 12px;
+        @include respond-to(medium-screens) {margin-left: 12px;}
       }
     }
+  }
+}
+
+.noticias-home{
+  padding-bottom: 60px;
+  h4{
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 800;
+    text-align: center;
+    color: #2e3359;
+    @include respond-to(medium-screens) { font-size: 28px;}
+
   }
 }
 
@@ -1070,7 +1365,7 @@ footer{
   height: 100%;
   position: relative;
   margin-top: -142px;
-
+  background-size: cover;
   background-image: url(../img/banner-quem-somos.png);
   .wrap-container-quem-somos{
     display: flex;
@@ -1083,10 +1378,13 @@ footer{
     text-align: center;
     width: 100%;
     position: absolute;
+    @include respond-to(medium-screens) { padding-top: 142px;}
+
     h1{
       font-size: 38px;
       color: #fff;
       margin-bottom: 38px;
+      @include respond-to(medium-screens) { font-size: 28px}
     }
     p{
       width: 694px;
@@ -1095,6 +1393,7 @@ footer{
       font-size: 16px;
 	    line-height: 1.44;
       margin-bottom: 15px;
+      @include respond-to(medium-screens) { width: 100%;font-size: 14px;}
     }
   }
 }
@@ -1109,6 +1408,7 @@ footer{
   position: relative;
   margin-top: -72px;
   z-index: 100;
+  @include respond-to(medium-screens) { margin-top: 0px;}
 
   &.container-direitos-simple{
     background-image: none;
@@ -1120,6 +1420,7 @@ footer{
           padding: 0px;
           width: 866px;
           margin: 0 auto;
+          @include respond-to(medium-screens) { width: 100%;}
         }
       }
     }
@@ -1130,15 +1431,16 @@ footer{
       background-color: #f4f2f2;
       padding: 86px 0px;
       padding-bottom: 43px;
+      @include respond-to(medium-screens) { padding: 43px 0px;}
     }
     .wrap-shadow{
       background-image: url(../img/shadow-box-direitos.png);
-
       height: 85px;
       margin: 0 auto;
       background-position: center;
       background-repeat: no-repeat;
       margin-bottom: 16px;
+      @include respond-to(medium-screens) { display: none;}
     }
   }
 
@@ -1153,6 +1455,7 @@ footer{
   	letter-spacing: normal;
   	text-align: center;
   	color: #2e3359;
+    @include respond-to(medium-screens) { font-size: 28px;}
   }
   img{
     display: block;
@@ -1172,6 +1475,7 @@ footer{
     padding: 52px 144px;
     flex-wrap: wrap;
     display: flex;
+    @include respond-to(medium-screens) { padding: 25px 15px;}
     li{
       display: flex;
       margin-bottom: 30px;
@@ -1229,9 +1533,11 @@ footer{
   z-index: 10;
   img.divisor{
     margin-bottom: 59px;
+    @include respond-to(medium-screens) {margin-bottom: 30px;}
   }
   ul{
     li{
+      @include respond-to(medium-screens) {display: block;margin: 0 auto;margin-bottom: 30px;}
       span{
         display: block;
         text-align: left;
@@ -1264,6 +1570,7 @@ footer{
   .wrap-information{
     width: 960px;
     margin: 0 auto;
+    @include respond-to(medium-screens) {width: 100%;}
     .information{
       padding: 41px;
       overflow: hidden;
@@ -1322,6 +1629,8 @@ footer{
         float: left;
         background-color: #f1f1f1;
         margin-right: 15px;
+          @include respond-to(medium-screens) {width: 100%;
+          margin-bottom: 15px;}
         ul{
           overflow: hidden;
           padding: 22px 27px;
@@ -1330,6 +1639,7 @@ footer{
             width: 50%;
             float: left;
             margin-bottom: 8px;
+              @include respond-to(medium-screens) {width: 100%;margin-bottom: 15px;}
             span{
               &.title-people{
                 font-size: 15px;
@@ -1347,6 +1657,7 @@ footer{
       .wrap-address{
         width: 566px;
         margin-top: 20px;
+        @include respond-to(medium-screens) {width: 100%;}
       }
       .wrap-documentos{
         margin-top: 20px;
@@ -1420,6 +1731,7 @@ footer{
   	line-height: 1.44;
   	text-align: center;
   	color: #000000;
+    @include respond-to(medium-screens) { width: 100%; font-size: 15px;}
   }
 }
 
@@ -1434,6 +1746,7 @@ footer{
   background-image: url(../img/wrap-banner-direitos.png);
   position: relative;
   margin-bottom: 116px;
+  @include respond-to(medium-screens) { margin-bottom: 80px;padding-top: 110px;}
   h2{
     margin-top: 56px;
     margin-bottom: 15px;
@@ -1462,6 +1775,7 @@ footer{
     margin: 0 auto;
     margin-top: 26px;
     margin-bottom: 41px;
+    @include respond-to(medium-screens) { width: 100%;}
   }
   .wrap-left-direitos{
     img{
@@ -1500,6 +1814,8 @@ footer{
   background-color: #F3F1F1;
   margin-top: 0px;
   padding: 91px 0px;
+  @include respond-to(medium-screens) { padding: 45px 0px;margin-top: 30px;}
+
 
   h4.title{
     font-size: 38px;
@@ -1510,6 +1826,7 @@ footer{
   	letter-spacing: normal;
   	text-align: center;
   	color: #2e3359;
+    @include respond-to(medium-screens) { font-size: 28px;}
   }
   img.divisor{
     display: block;
@@ -1609,5 +1926,40 @@ footer{
     top:0;
     right:0;
     z-index: 100;
+  }
+}
+
+
+#carousel-depoimentos-mobile{
+  .carousel-control.right,.carousel-control.left{
+    background-image: none;
+    opacity: 1;
+  }
+  .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev,.carousel-control .glyphicon-chevron-right, .carousel-control .icon-next{
+    color: #e91d29;
+    text-shadow: none;
+  }
+  .item{
+    text-align: center;
+    img{
+      display: block;
+      margin: 0 auto;
+      margin-top: 30px;
+
+    }
+    .information{
+
+      border-top: 5px solid #e91d29;;
+      width: 60%;
+      margin: 0 auto;
+      margin-top: 15px;
+      padding-bottom: 15px;
+      span{
+        display: block;
+        &.name{
+          margin-top: 15px;
+        }
+      }
+    }
   }
 }
